@@ -1,0 +1,15 @@
+<script type="module">
+  import { auth, db, onAuthStateChanged } from './firebase-config.js';
+  import { doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  // Pantau status login pengguna (Guru / Wali Kelas / Admin) & refresh Custom Claims
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const tokenResult = await user.getIdTokenResult();
+      const role = tokenResult.claims.role || 'guru_mapel';
+      console.log(`SIMAGIS PRO Terhubung: ${user.email} | Role: ${role}`);
+    } else {
+      console.log("Mode Offline / Belum Login");
+    }
+  });
+</script>
